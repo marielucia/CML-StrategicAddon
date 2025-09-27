@@ -1,0 +1,11 @@
+// Generated from DDD Context Map.
+API description CustomerManagementContextAPI
+
+// ** BEGIN PROTECTED REGION for data types
+data type Parameter1Type P
+data type YetAnotherDataType P
+// ** END PROTECTED REGION for data types
+
+data type Address P
+data type Parameter1Type P
+data type Parameter2Type P

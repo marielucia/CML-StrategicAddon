@@ -1,0 +1,29 @@
+// Generated from DDD Context Map.
+API description CustomerManagementContextAPI
+
+
+data type Address { "street":D<string>, "houseNumber":D<int>, "refAttr":ReferenceType }
+data type EmptyVO P // the type EmptyVO has not been specified or does not contain any attributes in CML
+data type ReferenceType { "attr1":D<string>, "empty":EmptyVO }
+data type ReturnType P // the type ReturnType has not been specified or does not contain any attributes in CML
+
+
+endpoint type Customers
+	serves as INFORMATION_HOLDER_RESOURCE
+	exposes
+		operation updateAddress
+			with responsibility COMPUTATION_FUNCTION
+			expecting
+				payload Address
+			delivering
+				payload ReturnType
+
+
+API provider CustomerManagementContextProvider
+	offers Customers
+	at endpoint location "http://localhost:8000"
+		via protocol "RESTful HTTP"
+
+
+API client ContractManagementContextClient
+	consumes Customers

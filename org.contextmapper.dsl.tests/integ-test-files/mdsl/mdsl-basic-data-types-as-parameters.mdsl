@@ -1,0 +1,47 @@
+// Generated from DDD Context Map.
+API description CustomerManagementContextAPI
+
+
+
+
+endpoint type Customers
+	exposes
+		operation anotherMethod
+			expecting
+				payload D<int>
+			delivering
+				payload D<string>
+		operation intMethod
+			expecting
+				payload D<int>
+		operation booleanMethod
+			expecting
+				payload D<bool>
+		operation longMethod
+			expecting
+				payload D<long>
+		operation longlongMethod
+			expecting
+				payload D<long>
+		operation doubleMethod
+			expecting
+				payload D<double>
+		operation doubledoubleMethod
+			expecting
+				payload D<double>
+		operation blobMethod
+			expecting
+				payload D<raw>
+		operation IntegerMethod
+			expecting
+				payload D<int>
+
+
+API provider CustomerManagementContextProvider
+	offers Customers
+	at endpoint location "http://localhost:8000"
+		via protocol "RESTful HTTP"
+
+
+API client ContractManagementContextClient
+	consumes Customers

@@ -1,0 +1,27 @@
+// Generated from DDD Context Map.
+API description CustomerManagementContextAPI
+
+
+data type Address { "street":D<string>, "houseNumber":D<int> }
+data type BankAccount P // the type BankAccount has not been specified or does not contain any attributes in CML
+data type Customer { "firstName":D<string>, "lastName":D<string>, "account":BankAccount, "address":Address }
+data type ReturnType P // the type ReturnType has not been specified or does not contain any attributes in CML
+
+
+endpoint type Customers
+	exposes
+		operation updateCustomer
+			expecting
+				payload Customer
+			delivering
+				payload ReturnType
+
+
+API provider CustomerManagementContextProvider
+	offers Customers
+	at endpoint location "http://localhost:8000"
+		via protocol "RESTful HTTP"
+
+
+API client ContractManagementContextClient
+	consumes Customers

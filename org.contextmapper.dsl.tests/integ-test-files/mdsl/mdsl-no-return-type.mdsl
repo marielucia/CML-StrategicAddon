@@ -1,0 +1,36 @@
+// Generated from DDD Context Map.
+API description CustomerManagementContextAPI
+
+// ** BEGIN PROTECTED REGION for data types
+
+// ** END PROTECTED REGION for data types
+
+
+// ** BEGIN PROTECTED REGION for endpoint types
+
+// ** END PROTECTED REGION for endpoint types
+
+endpoint type Customers
+	exposes
+		operation myMethod
+			expecting
+				payload D<string>
+		operation myMethod2
+			expecting
+				payload D<string>
+
+// ** BEGIN PROTECTED REGION for API providers
+
+// ** END PROTECTED REGION for API providers
+
+API provider CustomerManagementContextProvider
+	offers Customers
+	at endpoint location "http://localhost:8000"
+		via protocol "RESTful HTTP"
+
+// ** BEGIN PROTECTED REGION for API clients
+
+// ** END PROTECTED REGION for API clients
+
+API client ContractManagementContextClient
+	consumes Customers
