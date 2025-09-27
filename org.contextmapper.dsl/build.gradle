@@ -1,0 +1,161 @@
+apply plugin: 'signing'
+
+dependencies {
+	api "org.eclipse.xtext:org.eclipse.xtext:${xtextVersion}"
+	api "org.eclipse.xtext:org.eclipse.xtext.xbase:${xtextVersion}"
+	
+	testImplementation "org.eclipse.xtext:org.eclipse.xtext.testing:${xtextVersion}"
+	testImplementation "org.eclipse.xtext:org.eclipse.xtext.xbase.testing:${xtextVersion}"
+
+	implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+	implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.30'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
+	implementation group: 'org.yaml', name: 'snakeyaml', version: '1.14'
+	implementation group: 'org.contextmapper', name: 'context-map-generator', version: '1.2.1'
+}
+
+configurations {
+	mwe2 {
+		extendsFrom implementation
+	}
+}
+
+dependencies {
+	mwe2 'org.eclipse.emf:org.eclipse.emf.mwe2.launch'
+	mwe2 "org.eclipse.xtext:org.eclipse.xtext.common.types:${xtextVersion}"
+	mwe2 "org.eclipse.xtext:org.eclipse.xtext.xtext.generator:${xtextVersion}"
+	mwe2 "org.eclipse.xtext:xtext-antlr-generator"
+}
+
+task generateXtextLanguage(type: JavaExec) {
+	mainClass = 'org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher'
+	classpath = configurations.mwe2
+	inputs.file "src/org/contextmapper/dsl/GenerateContextMappingDSL.mwe2"
+	inputs.file "src/org/contextmapper/dsl/ContextMappingDSL.xtext"
+	outputs.dir "src-gen"
+	args += "src/org/contextmapper/dsl/GenerateContextMappingDSL.mwe2"
+	args += "-p"
+	args += "rootPath=/${projectDir}/.."
+}
+
+processResources.dependsOn(generateXtextLanguage)
+generateXtext.dependsOn(generateXtextLanguage)
+clean.dependsOn(cleanGenerateXtextLanguage)
+eclipse.classpath.plusConfigurations += [configurations.mwe2]
+//this is an eclipse plugin project
+eclipseClasspath.enabled=false
+cleanEclipseClasspath.enabled=false
+
+clean {
+    delete 'xtend-gen'
+    delete 'model'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+javadoc {
+    options.tags = [ "model", "generated", "ordered", "Inject" ]
+    exclude 'org/contextmapper/dsl/contextMappingDSL/impl/**'
+    exclude 'org/contextmapper/servicecutter/dsl/serviceCutterConfigurationDSL/impl/**'
+    exclude 'org/contextmapper/tactic/dsl/tacticdsl/impl/**'
+    exclude 'org/contextmapper/tactic/dsl/serializer/**'
+    exclude 'org/contextmapper/dsl/serializer/**'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign(publishing.publications)
+    required { gradle.taskGraph.hasTask("publishMavenJavaPublicationToMavenLocal") || gradle.taskGraph.hasTask("publishMavenJavaPublicationToMavenRepository") }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+        	customizePom(pom)
+        	
+            artifactId = "${project.name}"
+            groupId = "${project.group}"
+            version = "${project.version}"
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "${ossReleaseStagingRepository}"
+            def snapshotsRepoUrl = "${ossSnapshotRepository}"
+            url = project.version.text().endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            
+            credentials {
+                username = System.getenv('OSSRH_USERNAME')
+                password = System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
+}
+
+def customizePom(pom) {
+    pom.withXml {
+        def root = asNode()
+
+        // eliminate test-scoped dependencies
+        root.dependencies.removeAll { dep ->
+            dep.scope == "test"
+        }
+
+        root.children().last() + {
+            resolveStrategy = Closure.DELEGATE_FIRST
+
+            description 'Use the ContextMapper DSL in your standalone application.'
+            name 'ContextMapper DSL'
+            url 'https://github.com/ContextMapper/context-mapper-dsl'
+            organization {
+                name 'Context Mapper'
+                url 'https://contextmapper.org/'
+            }
+            issueManagement {
+                system 'GitHub'
+                url 'https://github.com/ContextMapper/context-mapper-dsl/issues'
+            }
+            licenses {
+                license {
+                    name 'Apache License 2.0'
+                    url 'https://github.com/ContextMapper/context-mapper-dsl/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                url 'https://github.com/ContextMapper/context-mapper-dsl'
+                connection 'scm:git:git://github.com/ContextMapper/context-mapper-dsl.git'
+                developerConnection 'scm:git:ssh://git@github.com:ContextMapper/context-mapper-dsl.git'
+            }
+            developers {
+                developer {
+                    name 'Stefan Kapferer'
+                    email 'stefan@contextmapper.org'
+                }
+            }
+        }
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenJavaPublication {
+        destination = file("$buildDir/generated-pom.xml")
+    }
+
+}
