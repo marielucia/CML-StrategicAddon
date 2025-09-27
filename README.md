@@ -32,8 +32,10 @@ Not all of the originial CML files were adapted, only those necessary to include
     3. org.contextmapper.dsl/src/org/contextmapper/dsl/validation/ContextMapSemanticsValidator.java
     4. org.contextmapper.dsl/src/org/contextmapper/dsl/validation/ValidationMessages.java
  
+The uptaded CML can be used as a plugin for modelling purposes. The jar-file can be found here: cml-plugin/plugin/.
+ 
 ## Work environment
-This Addon was developed and tested with Eclipse DSL Tools 2023-09 (4.29.0) and Java JDK 11
+This Addon was developed and tested with Eclipse DSL Tools 2023-09 (4.29.0) and JavaSE 17
 
 ## License
 Apache-2.0 (aligned with the originial CML)
