@@ -6,8 +6,8 @@ The Context Mapper Language (CML) is a textual domain-specific language (DSL) fo
 
 ## What’s new in this project
 Context-map additions:
-- Separate Ways relationship.
-- Big Ball of Mud annotation.
+- Separate Ways relationship
+- Big Ball of Mud annotation
   
 Distillation pattern additions:
 - Highlighted Core
