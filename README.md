@@ -1,5 +1,5 @@
 # CML-StrategicAddon
-An adapted CML-Version which extends the existing grammar with missing strategic design patterns.
+An adapted CML-Version which extends the existing grammar with missing strategic design patterns based on DDD.
 
 ## What's CML
 The Context Mapper Language (CML) is a textual domain-specific language (DSL) for modeling Domain-Driven Design systems. It captures strategic and tactical concepts and supports model-driven analysis and rapid prototyping via the Context Mapper toolchain. This repository builds on the existing CML-project (https://github.com/ContextMapper/context-mapper-dsl) createy by Stefan Kapferer and introduces additional strategic design constructs
