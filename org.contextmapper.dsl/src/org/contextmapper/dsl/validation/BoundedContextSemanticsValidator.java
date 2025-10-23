@@ -64,7 +64,7 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 		}
 	}
 
-
+	/* New constraint - highlighted elments must exist within a BC */
 	@Check
 	public void checkHighlightedCore_elementsExistInBC(final org.contextmapper.dsl.contextMappingDSL.BoundedContext bc) {
 	    // erlaubte Namen im BC sammeln
@@ -90,6 +90,7 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 	    }
 	}
 
+	/* New constraint - highlighted elments must be explicitly referenced */
 	@Check
 	public void checkHighlightedCore_needsElements(final org.contextmapper.dsl.contextMappingDSL.BoundedContext bc) {
 	    for (org.contextmapper.dsl.contextMappingDSL.HighlightedCore hc : bc.getHighlightedCores()) {
@@ -100,8 +101,8 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 	        }
 	    }
 	}
-	
 
+	/* New constraint - 1 supporting OR 1 core elements must be explicitly referenced */
 	@org.eclipse.xtext.validation.Check
 	public void checkSegregatedCore_atLeastOneSideSet(final org.contextmapper.dsl.contextMappingDSL.BoundedContext bc) {
 	    // Durchlaufe alle SegregatedCore-Instanzen im BC
@@ -120,6 +121,7 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 	    }
 	}
 
+	/* New constraint - supporting elements cannot be core elements (and the other way around) */
 	@Check
 	public void checkSegregatedCore_noOverlap(final org.contextmapper.dsl.contextMappingDSL.BoundedContext bc) {
 	    for (var sc : bc.getSegregatedCores()) {
@@ -137,7 +139,8 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 	        }
 	    }
 	}
-	
+
+	/* New constraint - core or supporting elments must exist within a BC */
 	@Check
 	public void checkSegregatedCore_elementsExistInBC(final org.contextmapper.dsl.contextMappingDSL.BoundedContext bc) {
 	    for (var sc : bc.getSegregatedCores()) {
@@ -176,7 +179,8 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 	        }
 	    }
 	}
-	
+
+	/* New constraint - if scope is set as MULTI_BC, multiple BC must be referenced */
 	@org.eclipse.xtext.validation.Check
 	public void checkCohesiveMechanisms_scopeMultiBCExpectation(final org.contextmapper.dsl.contextMappingDSL.BoundedContext bc) {
 	    for (org.contextmapper.dsl.contextMappingDSL.CohesiveMechanism cm : bc.getMechanisms()) {
@@ -189,6 +193,4 @@ public class BoundedContextSemanticsValidator extends AbstractDeclarativeValidat
 	        }
 	    }
 	}
-
-
 }
