@@ -53,6 +53,7 @@ public class ContextMapSemanticsValidator extends AbstractDeclarativeValidator {
 		// not needed for classes used as ComposedCheck
 	}
 
+	/* No new constraint, but Separate Ways is automatically included for this constraint */
 	@Check
 	public void validateThatRelationshipContextArePartOfMap(final ContextMap map) {
 		for (Relationship relationship : map.getRelationships()) {
@@ -112,7 +113,12 @@ public class ContextMapSemanticsValidator extends AbstractDeclarativeValidator {
 			}
 		}
 	}
-	
+
+	private boolean isContextPartOfMap(ContextMap map, BoundedContext context) {
+		return map.getBoundedContexts().contains(context);
+	}
+
+	/* New constraint - A BBoM must have t least one BC referenced */
 	@Check
 	public void checkBBOM_hasAtLeastOneAffectedContext(final org.contextmapper.dsl.contextMappingDSL.ContextMap map) {
 	    int idx = 0;
@@ -127,6 +133,7 @@ public class ContextMapSemanticsValidator extends AbstractDeclarativeValidator {
 	    }
 	}
 
+	/* New constraint - relationships of affected contexts must stay within BBoM  */
 	@Check
 	public void checkBBOM_relationshipsStayWithinAffectedContexts(final org.contextmapper.dsl.contextMappingDSL.ContextMap map) {
 	    for (org.contextmapper.dsl.contextMappingDSL.BigBallOfMud bbom : map.getBigBallsOfMud()) {
@@ -157,7 +164,8 @@ public class ContextMapSemanticsValidator extends AbstractDeclarativeValidator {
 	        }
 	    }
 	}
-	
+
+	/* New constraint - abstract core needs two participants */
 	@Check
 	public void checkAbstractCore_minTwoParticipants(final org.contextmapper.dsl.contextMappingDSL.ContextMap map) {
 	    int idx = 0;
@@ -172,7 +180,7 @@ public class ContextMapSemanticsValidator extends AbstractDeclarativeValidator {
 	    }
 	}
 
-
+	/* New constraint - abstract core and separate ways cannot exit at the same time */
 	@Check
 	public void checkAbstractCore_noSeparateWaysBetweenParticipants(final org.contextmapper.dsl.contextMappingDSL.ContextMap map) {
 	    for (org.contextmapper.dsl.contextMappingDSL.AbstractCore ac : map.getAbstractCores()) {
@@ -201,10 +209,5 @@ public class ContextMapSemanticsValidator extends AbstractDeclarativeValidator {
 	            }
 	        }
 	    }
-	}
-
-
-	private boolean isContextPartOfMap(ContextMap map, BoundedContext context) {
-		return map.getBoundedContexts().contains(context);
 	}
 }
