@@ -74,7 +74,8 @@ public class BoundedContextRelationshipSemanticsValidator extends AbstractDeclar
 			relationshipIndex++;
 		}
 	}
-	
+
+	/* New constraint - no other reationship between two BCs when Separate Ways ist established */
 	@Check
 	public void prohibitAdditionalRelationshipsWhenSeparateWays(final ContextMap contextMap) {
 	    final java.util.List<Relationship> rels = contextMap.getRelationships();
@@ -112,6 +113,4 @@ public class BoundedContextRelationshipSemanticsValidator extends AbstractDeclar
 	        }
 	    }
 	}
-
-
 }
