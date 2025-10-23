@@ -37,20 +37,6 @@ public class ValidationMessages {
 	public static final String COORDINATION_STEP_SERVICE_NOT_ON_STEP_CONTEXT_APPLICATION = "The Service '%s' is not part of the Bounded Context '%s' Application.";
 	public static final String COORDINATION_STEP_OPERATION_NOT_ON_STEP_SERVICE = "The operation '%s' is not part of the Service '%s' of the Bounded Context '%s' Application.";
 	public static final String COORDINATION_STEP_OPERATION_IS_AMBIGUOUS = "The reference to operation '%s' is ambiguous, since there exist multiple operations with that name in Service '%s'. We suggest keeping the operation names distinct when referencing them through Coordinations.";
-	/* BoundedContextRelationshipSemanticsValidator.java - new pattern constraints  */
-	public static final String SEPARATE_WAYS_EXCLUSIVE_FMT = "Separate Ways is exclusive, there should be no other relationship between '%s' and '%s'.";
-	/* ContexMapSemanticsValidator.java - new pattern constraints */
-	public static final String BBOM_AFFECTED_CONTEXTS_EMPTY = "At least one affected context must be specified for a Big Ball of Mud.";
-	public static final String BBOM_REL_OUTSIDE_SCOPE = "Each referenced relationship within a Big Ball of Mud must lie within the affected contexts.";
-	public static final String ABSTRACT_CORE_NEEDS_TWO_PARTICIPANTS = "Abstract Core requires at least two participating Bounded Contexts.";
-	public static final String ABSTRACT_CORE_SEPARATE_WAYS_CONFLICT = "Abstract Core conflicts with Separate Ways. They cannot exist together.";
-	/* BoundedContextSemanticsValidator.java - new pattern constraints  */
-	public static final String HIGHLIGHTED_CORE_ELEMENTS_MUST_EXIST = "Each listed element within a Highlighted Core must exist in the BC.";
-	public static final String HIGHLIGHTED_CORE_NEEDS_ELEMENTS = "A Highlighted Core must at least provide one elements.";
-	public static final String SEGREGATED_CORE_AT_LEAST_ONE_SIDE = "In a Segregated Core at least one side ('coreElements' or 'supportingElements') must be referenced.";
-	public static final String SEGREGATED_CORE_NO_OVERLAP = "An element can not be a coreElement and supportingElement in a BC at the same time.";
-	public static final String SEGREGATED_CORE_ELEMENTS_MUST_EXIST = "Each referenced element within a Segregated Core entry must exist in the BC.";
-	public static final String COHESIVE_MECH_SCOPE_MULTI_BC_EXPECTS_MULTI_BC = "The scope=MULTI_BC within Cohesive Mechaisms implies usage by multiple Bounded Contexts.";
 	
 	/* Uniqueness problems */
 	public static final String BOUNDED_CONTEXT_NAME_NOT_UNIQUE = "Multiple bounded contexts with the name '%s' have been declared.";
@@ -89,4 +75,18 @@ public class ValidationMessages {
 	public static final String VISUALIZE_FLOW_WITH_SKETCH_MINER = "Do you want to vizualize this flow? You can open it in BPMN Sketch Miner ...";
 	public static final String VISUALIZE_COORDINATION_WITH_SKETCH_MINER = "Do you want to vizualize this coordination? You can open it in BPMN Sketch Miner ...";
 
+	/* New strategic pattern constraints - BoundedContextRelationshipSemanticsValidator.java */
+	public static final String SEPARATE_WAYS_EXCLUSIVE_FMT = "Separate Ways is exclusive, there should be no other relationship between '%s' and '%s'.";
+	/* New strategic pattern constraints - ContexMapSemanticsValidator.java */
+	public static final String BBOM_AFFECTED_CONTEXTS_EMPTY = "At least one affected context must be specified for a Big Ball of Mud.";
+	public static final String BBOM_REL_OUTSIDE_SCOPE = "Each referenced relationship within a Big Ball of Mud must lie within the affected contexts.";
+	public static final String ABSTRACT_CORE_NEEDS_TWO_PARTICIPANTS = "Abstract Core requires at least two participating Bounded Contexts.";
+	public static final String ABSTRACT_CORE_SEPARATE_WAYS_CONFLICT = "Abstract Core conflicts with Separate Ways. They cannot exist together.";
+	/* New strategic pattern constraints -BoundedContextSemanticsValidator.java */
+	public static final String HIGHLIGHTED_CORE_ELEMENTS_MUST_EXIST = "Each listed element within a Highlighted Core must exist in the BC.";
+	public static final String HIGHLIGHTED_CORE_NEEDS_ELEMENTS = "A Highlighted Core must at least provide one elements.";
+	public static final String SEGREGATED_CORE_AT_LEAST_ONE_SIDE = "In a Segregated Core at least one side ('coreElements' or 'supportingElements') must be referenced.";
+	public static final String SEGREGATED_CORE_NO_OVERLAP = "An element can not be a coreElement and supportingElement in a BC at the same time.";
+	public static final String SEGREGATED_CORE_ELEMENTS_MUST_EXIST = "Each referenced element within a Segregated Core entry must exist in the BC.";
+	public static final String COHESIVE_MECH_SCOPE_MULTI_BC_EXPECTS_MULTI_BC = "The scope=MULTI_BC within Cohesive Mechaisms implies usage by multiple Bounded Contexts.";
 }
